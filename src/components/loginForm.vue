@@ -33,20 +33,46 @@
 </template>
 
 <script>
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const backendUri = import.meta.env.VITE_BACKEND_URL;
+
 export default {
       data() {
             return {
                   formData: {
                         email: "",
                         password: "",
-                  }
-            }
+                  },
+            };
       },
       methods: {
-            // import.meta.env.VITE_API_ROUTE_DEV
             async login() {
-                  console.log(this.formData)
-            }
+                  try {
+                        const req = await axios.post(
+                              `${backendUri}login`,
+                              this.formData
+                        );
+
+                        if (req.data.process) {
+                              localStorage.setItem(
+                                    "accesToken",
+                                    req.data.token
+                              );
+                              this.$router.push("/dashboard");
+                        } else {
+                              Swal.fire({
+                                    title: "Upps!",
+                                    text: "This user does not exist",
+                                    icon: "error",
+                                    confirmButtonText: "Aceptar",
+                              });
+                        }
+                  } catch (error) {
+                        alert(error.message);
+                  }
+            },
       },
-}
+};
 </script>
