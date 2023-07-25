@@ -3,6 +3,8 @@
             <div class="row">
                   <div class="col-md-6" id="rightSection">
                         <div class="formContainer">
+                              <img src="../assets/logo.png" alt="">
+                              <br><br>
                               <h2>Login to Account</h2>
                               <small>Enter your credentials to access your account</small>
                               <loginForm/>
